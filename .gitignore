@@ -1,0 +1,9 @@
+# processed files
+*.pyc
+*.out
+*.dat
+
+# images
+*.png
+*.ps
+
