@@ -22,7 +22,7 @@ def plot(lonGrid, latGrid, data, show=False, out_file='', title='', **kwargs):
   m = Basemap(projection='cyl', urcrnrlat=urlat, urcrnrlon=urlon, llcrnrlat=lllat, llcrnrlon=lllon)
   cnt = m.contourf(lonGrid, latGrid, data, cmap='jet', **kwargs)
   m.colorbar()
-  m.fillcontinents(lake_color=None)
+  # m.fillcontinents(lake_color=None)
   m.drawcoastlines(linewidth=.5)
   m.drawparallels(np.arange(-90, 90, 25), labels=[True, False, False, False])
   m.drawmeridians(np.arange(-180, 180, 75), labels=[False, False, False, True])

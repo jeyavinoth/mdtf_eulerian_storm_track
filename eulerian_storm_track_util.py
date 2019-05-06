@@ -103,8 +103,8 @@ def obs_std_dev(obs_data_file):
 
   for i_year in range(start_year, end_year+1):
 
-    if not ((i_year == end_year) | (i_year == start_year)):
-      i_djf = np.squeeze(in_jf[in_time == i_year, :, :, :] + in_dec[in_time == i_year+1, :, :, :])
+    if not ((i_year == start_year)):
+      i_djf = np.squeeze(in_dec[in_time == i_year-1, :, :, :] + in_jf[in_time == i_year, :, :, :])
       i_djf = np.sqrt(i_djf[0, :, :]/i_djf[1, :, :])
       djf_year.append(i_djf)
     
