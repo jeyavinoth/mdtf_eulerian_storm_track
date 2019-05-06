@@ -7,3 +7,9 @@
 *.png
 *.ps
 
+# swap files
+*.swp
+
+# data files 
+*.nc
+*.nc4
