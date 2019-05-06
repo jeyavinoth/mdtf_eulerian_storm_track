@@ -1,6 +1,0 @@
-Necessary Anaconda Packages
-
-conda install netcdf4
-conda install numpy
-conda install basemap
-conda install matplotlib

@@ -13,3 +13,6 @@
 # data files 
 *.nc
 *.nc4
+
+# doc files 
+doc/*

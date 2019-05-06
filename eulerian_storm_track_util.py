@@ -11,6 +11,7 @@ import numpy as np
 import datetime as dt
 import os
 from netCDF4 import Dataset
+import warnings
 
 def transient_eddies(daily_data):
   '''
@@ -56,12 +57,15 @@ def model_std_dev(data, start_year, time, season='djf'):
     elif (season == 'son'):
       time_ind = ((dates_year == i_year) & (dates_month == 9)) | ((dates_year == i_year) & (dates_month == 10)) | ((dates_year == i_year) & (dates_month == 11)) 
 
-    eddy_season_mean = np.sqrt(np.nanmean(data[time_ind, :, :] ** 2, axis=0))
-    eddy_year.append(eddy_season_mean)
+    with warnings.catch_warnings():
+      warnings.simplefilter("ignore", category=RuntimeWarning)
+      eddy_season_mean = np.sqrt(np.nanmean(data[time_ind, :, :] ** 2, axis=0))
+      eddy_year.append(eddy_season_mean)
 
-
-  eddy_year = np.asarray(eddy_year)
-  out_std_dev = np.nanmean(eddy_year, axis=0)
+  with warnings.catch_warnings():
+    warnings.simplefilter("ignore", category=RuntimeWarning)
+    eddy_year = np.asarray(eddy_year)
+    out_std_dev = np.nanmean(eddy_year, axis=0)
 
   # out_sum = np.nansum(eddy_year, axis=0)
   # out_cnt = np.count_nonzero(~np.isnan(eddy_year), axis=0)

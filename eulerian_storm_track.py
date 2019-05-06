@@ -176,6 +176,7 @@ else:
   ##########################################################
   # Editting HTML Template for the current CASENAME
   ##########################################################
+
   # Copy template html (and delete old html if necessary)
   if os.path.isfile( os.environ["variab_dir"]+"/eulerian_storm_track/eulerian_storm_track.html" ):
       os.system("rm -f "+os.environ["variab_dir"]+"/eulerian_storm_track/eulerian_storm_track.html")
@@ -189,7 +190,7 @@ else:
   os.system("cp "+os.environ["variab_dir"]+"/eulerian_storm_track/tmp.html "+os.environ["variab_dir"]+"/eulerian_storm_track/eulerian_storm_track.html")
   os.system("rm -f "+os.environ["variab_dir"]+"/eulerian_storm_track/tmp.html")
 
-  a = os.system("cat "+os.environ["variab_dir"]+"/index.html | grep eulerian_storm_track")
+  a = os.system("cat "+os.environ["variab_dir"]+"/index.html | grep eulerian_storm_track > /dev/null")
   if a != 0:
      os.system("echo '<H3><font color=navy>Eulerian Strom Track Diagnostics <A HREF=\"eulerian_storm_track/eulerian_storm_track.html\">plots</A></H3>' >> "+os.environ["variab_dir"]+"/index.html")
 
