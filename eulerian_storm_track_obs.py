@@ -106,8 +106,16 @@ def plot(data):
 ################################################################################
 
 ### Prep the data initially for the Eulerian Storm Track Code
+
+# ERA-Interim
+reanalysis = 'era5'
 year = [1979, 2015]
 obs_folder = '/mnt/drive5/ERAINTERIM/V850/'
+
+# ERA-5
+reanalysis = 'era5'
+year = [1979, 2018]
+obs_folder = '/mnt/drive5/era5/data/V850/'
 
 out_year = []
 out_jf = []
@@ -118,17 +126,33 @@ out_dec = []
 
 for i_year in range(year[0], year[1]+1): 
 
-  # get filename
-  obs_file = os.path.join(obs_folder, 'V0850_%d.nc'%(i_year)) 
+  if (reanalysis == 'erai'):
+    # get filename
+    obs_file = os.path.join(obs_folder, 'V0850_%d.nc'%(i_year)) 
 
-  # read in the data
-  nc = Dataset(obs_file, 'r')
-  nc.set_always_mask(False)
-  in_lat = nc.variables['lat'][:]
-  in_time = nc.variables['time'][:]
-  in_lon = nc.variables['lon'][:]
-  in_data = np.squeeze(nc.variables['var132'][:])
-  nc.close()
+    # read in the data
+    nc = Dataset(obs_file, 'r')
+    nc.set_always_mask(False)
+    in_lat = nc.variables['lat'][:]
+    in_time = nc.variables['time'][:]
+    in_lon = nc.variables['lon'][:]
+    in_data = np.squeeze(nc.variables['var132'][:])
+    nc.close()
+  elif (reanalysis == 'era5'):
+    # get filename
+    obs_file = os.path.join(obs_folder, 'V850_%d.nc'%(i_year)) 
+
+    # read in the data
+    nc = Dataset(obs_file, 'r')
+    nc.set_always_mask(False)
+    in_lat = nc.variables['latitude'][:]
+    in_time = nc.variables['time'][:]
+    in_lon = nc.variables['longitude'][:]
+    in_data = np.squeeze(nc.variables['v'][:])
+    nc.close()
+
+    start_hr = (dt.datetime(1900, 1, 1, 0, 0) + dt.timedelta(hours=float(in_time[0]))).hour
+    in_time = start_hr + np.arange(0, in_time.size*6, 6)
 
   # roll the arrays, so that the lons are from 0 to 360 
   if (np.any(in_lon < 0)): 
@@ -163,7 +187,7 @@ out_year = np.asarray(out_year)
 # creating the lat and lon in grid format
 lonGrid, latGrid = np.meshgrid(in_lon, in_lat)
 
-nc = Dataset('erai.nc', 'w')
+nc = Dataset('%s.nc'%(reanalysis), 'w')
 nc.set_fill_off()
 
 nc.createDimension('lat', lonGrid.shape[0])
@@ -202,5 +226,5 @@ dec_id[:] = out_dec
 
 nc.close()
 
-os.system('rsync --progress ./erai.nc ../../../inputdata/obs_data/eulerian_storm_track/')
+os.system('rsync --progress ./%s.nc ../../../inputdata/obs_data/eulerian_storm_track/'%(reanalysis))
 

@@ -145,11 +145,10 @@ else:
   out_file = os.environ['variab_dir']+'/eulerian_storm_track/obs/%s.%s.erai.png'%(os.environ['CASENAME'], 'SON')
   plotter.plot(obs_lon, obs_lat, son, out_file=out_file, title='%s (%d to %d)'%('SON', obs_start_year, obs_end_year), levels=np.arange(0,obs_max_lim), extend='max')
  
-  '''
   obs_data_file = os.environ['VARDATA'] + '/eulerian_storm_track/era5.nc'
   obs_lat, obs_lon, djf, mam, jja, son, obs_start_year, obs_end_year = est.obs_std_dev(obs_data_file)
 
-  obs_max_lim = 10
+  obs_max_lim = 6
 
   out_file = os.environ['variab_dir']+'/eulerian_storm_track/obs/PS/%s.%s.era5.ps'%(os.environ['CASENAME'], 'DJF')
   plotter.plot(obs_lon, obs_lat, djf, out_file=out_file, title='%s (%d to %d)'%('DJF', obs_start_year, obs_end_year), levels=np.arange(0,obs_max_lim), extend='max')
@@ -170,8 +169,6 @@ else:
   plotter.plot(obs_lon, obs_lat, son, out_file=out_file, title='%s (%d to %d)'%('SON', obs_start_year, obs_end_year), levels=np.arange(0,obs_max_lim), extend='max')
   out_file = os.environ['variab_dir']+'/eulerian_storm_track/obs/%s.%s.era5.png'%(os.environ['CASENAME'], 'SON')
   plotter.plot(obs_lon, obs_lat, son, out_file=out_file, title='%s (%d to %d)'%('SON', obs_start_year, obs_end_year), levels=np.arange(0,obs_max_lim), extend='max')
-
-  '''
   
   ##########################################################
   # Editting HTML Template for the current CASENAME
